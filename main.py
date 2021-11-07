@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import  RedirectResponse
 from bs4 import BeautifulSoup
 from requests_html import AsyncHTMLSession
 from datetime import datetime
@@ -16,7 +17,7 @@ platforms = {
 async def get_regions_spotify(url):
     asession = AsyncHTMLSession()
     html = await asession.get(url)
-    await html.html.arender()
+    await html.html.arender(timeout=15,sleep=3)
     soup = BeautifulSoup(html.text, "html.parser")
     drop_down = soup.find_all("div",{"class": "responsive-select", "data-type":"country"})[0]
     countries = {}
@@ -33,7 +34,7 @@ async def get_country_spotify(url):
     final = []
     asession = AsyncHTMLSession()
     html = await asession.get(url)
-    await html.html.arender()
+    await html.html.arender(timeout=15,sleep=3)
     soup = BeautifulSoup(html.text, "html.parser")
     date = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     for tr in soup.find("tbody").findAll("tr"):
@@ -100,13 +101,19 @@ async def get_country_youtube(url):
 
     return final
 
+# iTunes stuff
+async def get_regions_itunes(url):
+    return None
+
+async def get_country_itunes(url):
+    return None
 
 # app stuff
 app = FastAPI()
 
 @app.get("/")
-async def root():
-    return {"msg": "Hello"}
+async def docs_redirect():
+    return RedirectResponse(url='/docs')
 
 @app.get("/regions")
 async def regions():
