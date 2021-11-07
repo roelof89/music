@@ -17,7 +17,7 @@ platforms = {
 async def get_regions_spotify(url):
     asession = AsyncHTMLSession()
     html = await asession.get(url)
-    await html.html.arender(timeout=15,sleep=3)
+    await html.html.arender(sleep=3)
     soup = BeautifulSoup(html.text, "html.parser")
     drop_down = soup.find_all("div",{"class": "responsive-select", "data-type":"country"})[0]
     countries = {}
@@ -34,7 +34,7 @@ async def get_country_spotify(url):
     final = []
     asession = AsyncHTMLSession()
     html = await asession.get(url)
-    await html.html.arender(timeout=15,sleep=3)
+    await html.html.arender(sleep=3)
     soup = BeautifulSoup(html.text, "html.parser")
     date = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     for tr in soup.find("tbody").findAll("tr"):
