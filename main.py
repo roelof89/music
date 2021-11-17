@@ -101,13 +101,6 @@ async def get_country_youtube(url):
 
     return final
 
-# iTunes stuff
-async def get_regions_itunes(url):
-    return None
-
-async def get_country_itunes(url):
-    return None
-
 # app stuff
 app = FastAPI()
 
