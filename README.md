@@ -16,7 +16,7 @@ source venv/bin/activate
 
 Install requirements
 ```sh
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 Run. You can either use the tmux shell script to run in background or
